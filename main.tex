@@ -1,0 +1,135 @@
+% \PassOptionsToPackage{prologue,table}{xcolor}
+\documentclass[12pt]{article}
+%\documentclass[sigconf,anonymous,review]{acmart}
+
+
+\usepackage{sbc-template}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{xspace}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{stfloats}
+%\usepackage{todonotes}
+\usepackage[T1]{fontenc}
+\usepackage{etoolbox}
+\usepackage[table]{xcolor}
+% \usepackage[numbers]{natbib}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{todonotes}
+\usepackage{mdframed}
+
+% \lstset{breaklines=true}
+
+% \input{solidity-highlighting}
+
+% \graphicspath{ {./imgs/} }
+
+% \copyrightyear{2024}
+% \acmYear{2024}
+% \setcopyright{acmlicensed}\acmConference[SBES 2024]{XXXVIII Brazilian Symposium on Software Engineering}{September 30--04, 2024}{Curitiba, Brazil}
+% \acmBooktitle{XXXVIII Brazilian Symposium on Software Engineering (SBES 2024), September 25--04, 2024, Curitiba, Brazil}
+% \acmDOI{}
+% \acmISBN{}
+
+%\setlength\textfloatsep{\baselineskip}
+
+
+%\newcommand{\scrapper}{https://github.com/PAMunb/mining-email-lists/tree/develop\xspace}
+\newcommand{\scrapper}{Removed link\xspace}
+
+% \address{-}
+\sloppy
+
+\title{Mining the Questions on Source Code Rejuvenation Asked by C++ Boost Developers}
+
+% \title{Mining Source Code Rejuvenation Questions on C++ Bools Mailing Lists}
+
+\author{anonymous}
+\address{-}
+
+% \author{Ismael Medeiros}
+% \affiliation{%
+%   \institution{Computer Science Department, University of Brasilia}
+%   \city{Brasilia}
+%   \state{DF}
+%   \country{Brazil}
+% }
+% \author{Fausto Carvalho}
+% \affiliation{%
+%   \institution{Computer Science Department, University of Brasilia}
+%   \city{Brasilia}
+%   \state{DF}
+%   \country{Brazil}
+% }
+% \author{Alexandre Ferreira}
+% \affiliation{%
+%   \institution{Computer Science Department, University of Brasilia}
+%   \city{Brasilia}
+%   \state{DF}
+%   \country{Brazil}
+% }
+% \author{Rodrigo Bonif\'{a}cio}
+% \affiliation{%
+%   \institution{Computer Science Department, University of Brasilia}
+%   \city{Brasilia}
+%   \state{DF}
+%   \country{Brazil}
+% }
+
+% \author{Fabiano Cavalcanti Fernandes}
+% \affiliation{%
+%   \institution{Federal Institute of Bras\'{i}lia}
+%   \city{Brasilia}
+%   \state{DF}\\
+%   \country{Brazil}
+% }
+
+% \renewcommand{\shortauthors}{Medeiros, I., et al.}
+
+\begin{document}
+
+\maketitle
+
+\input{tex/abstract}
+
+\input{tex/introduction}
+\input{tex/background}
+\input{tex/settings}
+\input{tex/results}
+
+
+
+\section{Threats to validity}
+{\color{red} To do: Detail and explain the most relevant aspects to the study method that could pose as problematic to the validity of its results.}
+
+\section{Conclusion}
+
+In summary, these are the findings presented over this document.
+
+\subsection{Prevalence}
+
+\textbf{Research question (1): What is the prevalence of code rejuvenation discussions in the Boost mailing list?}
+
+The overall presence of code rejuvenation discussion is likely less than 1\% of the total amount of messages in the Boost mailing list. These discussions became more prevalent after C++11's release, and saw a further increase in presence throughout reduced usage of the list in more recent years. Additionally, the discussions seemed to peak around new C++ standard releases.
+
+\subsection{Topics}
+
+\textbf{Research question (2): What were the most discussed topics? Which language standards were mentioned the most?}
+
+The most discussed topics were C++11 and C++03, being present in around half of all 603 messages analyzed. These two topics were found to be mentioned together more often than not, and were tightly related in their occurrences. We also found that messages often mentioned more than one topic at once, and that they often discussed C++ standards that were 10+ years old, while more recent standards saw little presence in the discussion.
+
+\subsection{Arguments}
+
+\textbf{Research question: (3) What were the most common arguments in general? What were the most common ones either in favor of or against rejuvenation?}
+
+The most used arguments in these discussions characterized conversations between developers proposing discontinuation of older C++ standards and citing the costs of maintaining these, while other developers argued against the proposal of discontinuation, majorly due to considering users of said older standards required this support. Often, keeping multiple versions in different C++ standards was proposed as a middle-ground compromise in favor of the rejuvenation proposal. In total amount, most arguments presented were in favor of rejuvenation.
+
+
+\bibliographystyle{sbc}
+\bibliography{sample-base}
+
+\end{document}

@@ -1,0 +1,123 @@
+\section{Study Settings}
+
+The goal of this research is to understand {\color{red} REVISAR}
+as reflected in the questions and answers on the Boost mailing lists.
+Boost is one of the main C++ open-source organizations, significantly contributing to the evolution of the C++
+language specification. Currently, hundreds of C++ developers contribute to the implementation of Boost libraries,
+which are widely used and often integrated into the C++ standard library. Indeed,
+the success of some Boost libraries can be partially attributed to a formal review
+process that relies on mailing list discussions. Considering that the Boost foundation contributes to the evolution
+of C++ standards, it is expected that Boost libraries would be up-to-date with new versions of the language.
+However, migrating a Boost library to a new version of the C++ programming language is anything but trivial and
+should be carefully discussed among Boost members (Figure~\ref{fig:email1} shows a snippet of an email thread from the
+Boost mailing list on this subject). These careful discussions are necessary because rejuvenating a library
+might not only lead to (unexpected) breaking changes but also require the clients of that library to update their C++ code, dependencies,
+compilers, and tools as well. 
+
+\begin{figure}[htb]
+\begin{mdframed}[backgroundcolor=gray!40,shadow=true,roundcorner=8pt]
+  \begin{small}
+> Pursuant of discussion elsewhere: \\
+> Does anyone have any concrete objections to Boost moving to \\
+> a C++14 baseline? \\
+
+Yes. I do.(Caveat: But I'll be happy to be over-ruled.)
+
+We recently established that C++/Boost are unique in so far as they provide high-level abstractionson top of the C++ language. This C++ language creates optimized, compiled object that is near enough to the machine to facilitate high-performance. Along those lines, a lot of clients use Boost/C++ with older compilers, not because they cherisholder compilers, but since constraints make them end up stuck there. These are constraints such as legacy customer projects, old compilers, legacy licenses, [...], and more. Boost provides a service.
+\end{small}
+\end{mdframed}
+\caption{Example of an email thread highlighting the challenges of rejuvenating Boost libraries due
+  to compatibility issues with client programs, compilers, and so on.}
+\label{fig:email1}
+\end{figure}
+
+\subsection{Research Questions}
+
+To understan {\color{red}REVISAR}, we investigate the following research questions:
+
+\begin{enumerate}[(RQ1)]
+  \item How prevalent are code rejuvenation discussions in Boost mailing lists?
+  \item What are the most common themes in code rejuvenation threads?
+  \item What topics are most frequently discussed in these threads?
+  \item Which C++ language standards are mentioned most often?
+\end{enumerate}
+
+
+Answering the first research question allows us to measure the extent of code rejuvenation present in the entire mailing list history. Estimating how frequently software developers at Boost discuss this topic can help gauge its prevalence and importance to them.
+Answering the second research question enables a deeper dive into the content of these discussions. It is crucial to understand the themes that emerge, particularly to justify positions taken regarding code rejuvenation. We aim to identify the most commonly used arguments by both proponents and opponents of rejuvenation, providing insights into the reasoning and priorities of each developer involved in the discussion. Finally, answering research questions RQ3 and RQ4 helps us understand the specific topics addressed in messages about code rejuvenation. Given the nature of rejuvenation, it is of interest to identify which C++ standards were most frequently discussed.
+
+\subsection{Data Collection}
+
+% %% STUDY PROCEDURES ----------------------------------
+
+% \section{Study Procedures}
+
+% The research effort was initiated with the collection of data for the study. For that, the development of a web scraping application was conducted. This application scraped and stored the contents of the \textit{Boost mailing list}\footnote{https://lists.boost.org/Archives/boost/} into a database application. The details of this application are found in section 4.1.
+
+% Following the collection of data for the study, a manual effort was conducted to collect a body of known messages that were deemed as relevant to the topic of source code rejuvenation. This body is a subset of the whole mailing list and was used in order to employ a machine learning application to reduce the scope of the research.
+
+% Since it was expected that the relevant amount of messages within the whole mailing list would be a very small portion of it, a classifier model was created in order to analyze the whole mailing list in an automated way, and give preliminary insight into which messages were relevant or not. The manually selected body of relevant messages, along with messages known to be relevant from previous research efforts and also randomly sampled messages from the mailing list were used as both training and test databases for the classifier model. The details of this implementation are found in section 4.2.
+
+% Having employed the classifier model, the messages it deemed as relevant were then manually reviewed in order to both filter out false positives and to establish potentially relevant threads for further analysis. In this case, both the message itself, as well as the thread it belonged to were analyzed, considering if the thread could potentially contain more discussion on the topic of source code rejuvenation that was not identified by the classifier model. These threads were then read in full, in search of relevant messages. These messages, as they were selected, were also analyzed manually regarding their bias towards rejuvenation, their main arguments and what C++ standards were referenced. The details of this effort are found in section 4.3.
+
+% \subsection{Web scraping and the resulting database}
+
+% % Starting off the study, there was a need for a body of data to be studied.
+
+
+Our focus is on the Boost community, and the most readily available data for our research is contained in their public message board: the \textit{Boost MailMan Archive} (referred to hereafter as the \textit{Boost mailing list}). This archive is a message board hosted on a static HTML website, making it easy to collect data using a web scraper. We built a scraping application that goes through every post in the mailing list and captures key information such as the date of posting, author name, title of the post, and the body of the message. The scraper stores the collected data in a relational database for later access. In March 2023, we collected all the data available on the Boost mailing list at the time: a total of 253,548 messages, spanning more than two decades of mailing list history (from February 1998 to March 2023).
+
+% \subsection{Message Classifier}
+
+To better handle the volume of data collected, we decided to employ an automated
+effort to reduce the scope of our manual data analysis procedures. For that,
+our decision was to explore the Support Vector Machine (SVM)~\cite{\cite{mammone2009support}} algorithm to classify the messages
+that were more likely to contain code rejuvenation discussion.
+  
+SVM requires a labeled dataset for both training and testing of the model. As such, we
+employed a manual search effort in order to find a small amount of messages we deemed relevant to the topic.
+In it we went through many different points in the mailing list's history and searched through the threads
+for possible rejuvenation discussion. Once we found a relevant message, we stored its URL and relevant information
+in a spreadsheet for future reference. Adding messages known from previous research efforts,
+we found 58 messages in this endeavor, of which 32 were used to train the model and the remaining 26 were used for testing.
+
+\todo[inline]{n\~{a}o consegui compreender muito os numeros no paragrafo anterior e no proximo paragrafo.}
+
+The training dataset was composed of 32 manually selected messages and 300 randomly selected messages from the mailing list. The manually selected messages were
+labeled as ``relevant to rejuvenation'' and the 300 randomly selected were labeled ``not relevant to rejuvenation''. Similarly, the testing
+dataset was composed of 26 manually selected messages and 20 randomly selected from the mailing list. They were labeled the same
+way as the training dataset.
+
+The classifier model first performs the vectorization of the training dataset, using a TF-IDF transformation
+to more accurately represent relevant tokens in the analysis. Afterwards, the vectorized data is given as input
+to the learning algorithm. This results in a classifier model that we can leverage to classify new messages.
+To test the resulting model, the testing dataset is vectorized in the same way the traning dataset was, then we use the
+model to classify this new dataset's entries. Since this dataset was previously classified,
+we can measure the model's performance with metrics such as precision and recall.
+
+We obtained a score of 71\% precision and 100\% recall for ``not relevant to rejuvenation'' messages. We also got 100\% precision and 69\% recall for ``relevant to
+rejuvenation'' messages. Our objective here was to automatically find more messages ``relevant to rejuvenation'' than what we already had in our notes and spreadsheets.
+For that, 69\% recall in a small corpus of 46 test messages was likely to return many more true positives when applied to the full dataset of
+250 thousand messages. Therefore, we considered this model acceptable to search for more rejuvenation-related messages. This also means, however,
+that this approach will not be an extensive search, due to the low amount recalled.
+
+Running the whole mailing list dataset through the classifier model returned 967 messages labeled as ``relevant to rejuvenation''. Not every single one of these was
+manually reviewed, as will be explained in the next section. However, of the ones manually reviewed, 37.4\% (161 messages) were considered
+relevant to code rejuvenation.
+
+\todo[inline]{Discutir o par\'{a}grafo anterior}
+\subsection{Manual Analysis Effort}
+
+\todo[inline]{Incluir percentuais nos n\'{u}meros abaixo}
+
+Having the results from the classifier, we employed a manual effort in order to open the scope of analysis further out than only the model's results. For this, we went through the messages obtained from the automated effort and analyzed all threads to which they belonged to. By analyzing both the contents of these messages and the overall scope of discussion present in the thread as a whole, we considered if the threads were likely to contain a substantial amount rejuvenation-related discussion, also considering the model's results as an indication, such as when the model labeled tens of messages from a single thread as rejuvenation-relevant. If that was the case, we selected those threads for further analysis. Since many messages in the model's results belonged to reocurring threads, not every message from the results needed to be read then, as they would be later when the thread itself was read through. After this process, we selected 62 threads marked as ``potentially containing rejuvenation-related messages'', which opened the scope to 2816 messages in the threads.
+
+We then manually went through every message in this corpus of message threads. At this point, having already read through many instances of rejuvenation-related messages, we derived a rough list of reocurring categories of arguments present in rejuvenation-related discussion. This list would be updated as we read through the messages in the selected threads.
+
+In this manual classification process, we first consider if the message in question contains rejuvenation-related discussion. To determine that, we consider if the message contains any arguments for rejuvenating, against a previously proposed rejuvenation effort or related to rejuvenation, but ambiguous or neutral towards it. If it had at least one of these, it would be considered as containing rejuvenation discussion and would be added to a spreadsheet. The results of this would be used to answer our first research question.
+
+As a message was selected for containing rejuvenation-related discussion, it also was classified in three ways. Firstly, we consider \textbf{rejuvenation bias for the whole message}. That is, if the message as a whole can be said to be arguing for rejuvenation, against rejuvenation, is not clearly defined, or is neutral towards it. Afterwards, seeking to categorize the contents of the message in more detail, we consider \textbf{what topics were discussed} in that message. We considered mainly C++ standards (from 98 to 20) as topics, but there were also topics labeled as ``General'' and ``Compilers''. If a message mentioned any of these topics, it would be marked as having discussed it. Last but not least, we consider \textbf{what arguments were proposed} in that message, and note them down in the spreadsheet. For this, we tried to categorize the most reocurring arguments in these discussions into a list, as mentioned previously. Whenever we encountered an argument point in a message, we could reference that list to categorize it as one of the categories we already had, or create new categories not previously included.
+
+Going through every one of these message threads, we determined that two of them were not related to rejuvenation, rather, were related to an adjacent, but otherwise not related topic: Backporting code. These threads were excluded from the body of analysis, resulting in a body of 60 threads, containing 2639 messages. After every message was read, analyzed, selected and classified if selected, we obtained a body of 603 messages considered as containing rejuvenation-related discussion. Every single one of these messages had at least one topic and one argument related to it, and had been classified according to rejuvenation bias.
+
+% ANALYSIS RESULTS ------------------------------

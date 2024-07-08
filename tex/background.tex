@@ -1,0 +1,88 @@
+
+\section{Background and Related Work}
+
+\subsection{Source Code Rejuvenation}
+Pirkelbauer et al\cite{pirkelbauer2010source} defined source code rejuvenation as a source-to-source transformation that replaces deprecated features with modern code. This concept is related to software engineering as a whole because it names a specific practice that could be confused with others, such as refactoring, in relation to code maintenance and updates. This practice becomes even more relevant as time progresses because, due to the evolution of programming languages, systems that are not regularly updated tend to become outdated, still employing functionalities that have been deprecated or discontinued since their creation. This situation as a whole is more complex than a matter of making higher quality of code or maintaining legacy code, as it is also necessary to take into account the financial aspects and security risks of an update. \cite{sawant2018understanding}
+
+The essence of source code rejuvenation is to detect coding techniques in terms of a lower abstraction level language and convert them to code using a higher abstraction level. Through this process, the code becomes more understandable to programmers and compilers. Unlike refactoring, however, rejuvenation does not necessarily maintain the same behavior of the software in a strict sense, rather, rejuvenation improves it.
+
+An easy-to-understand example of source code rejuvenation, can be seen in how to write the initialization of a data structure containing an arbitrary number of values. Pirkelbauer et al\cite{pirkelbauer2010source} presents the following ways of initializing an object of class \textit{vector} containing types \textit{int} with the values \texttt{[1, 2, 3]} as the usual ways of coding in the C++98 standard:
+
+Option 1: Using consecutive \textit{push\_back} calls
+
+\begin{lstlisting}[language=C++]
+vector<int> vec;
+vec.push_back(1);
+vec.push_back(2);
+vec.push_back(3);
+\end{lstlisting}
+
+Option 2: Copying from an array
+
+\begin{lstlisting}[language=C++]
+int a[] = {1, 2, 3};
+vector<int> vec(a,a+sizeof(a)/sizeof(int));
+\end{lstlisting}
+
+The author then presents a way of doing the same task with rejuvenated code, using the C++0x standard (currently C++11):
+
+\begin{lstlisting}[language=C++]
+vector<int> vec = {1, 2, 3};
+\end{lstlisting}
+
+According to the author, the resulting code is more concise, requiring fewer lines of code to perform the same task, and also more uniform, since in this case two different workarounds can be replaced by the same rejuvenated code. This rejuvenation concept is extended to describe many more examples other than the one presented, such as, in the context of C++, \textit{smart pointer} or \textit{lambda expression} usage in place of older constructs and workarounds.
+
+Being our central subject of interest, this concept is taken in at least a general form in this research: the act of porting or adapting existing code from one C++ standard to a newer one. This assumes that the newer version will make use of new features as it may be relevant to that piece of code.
+
+\subsection{Related Work}
+
+The work detailed in this document is similar in nature to other research already done in the field of mailing list/internet forum thread mining and also to other work in the field of source code rejuvenation studies.
+
+Lucas et al\cite{lucas2023embracing} conducted a study on how KDE contributors practice rejuvenation in their projects. The study focused in specific features contained in C++11, C++14 and C++17, and how developers utilized them. The analysis was conducted in 272 KDE programs and libraries written in C++ which projects had started after 2010 and had had at least one commit made in 2022, so as to focus on changes on currently maintained code related to the features contained in post-C++11 versions. The research employed an automated method of detecting increases in use of modern C++ features while the number of actual statements remained constant, in order to determine at what points in time the project could've likely applied a rejuvenation effort. With these results, a keyword search was then applied to further investigate which commit messages were likely to contain rejuvenation efforts, the results of which then were manually analyzed to validate the contents regarding the subject. After this, the authors of the commits that were considered as containing rejuvenation efforts were contacted via email to understand the motivations that led to such a development. The results indicated that the reasoning was often related to improving readability and conciseness of the code, as well as slowing software aging and attracting new contributors to the projects. It's also suggested that the benefits of rejuvenation are perceived by developers, and that programming language designers would benefit from knowing about how modern features are embraced by developers. We referenced this study to set out a general guideline of what to look for regarding the intricacies and importance of source code rejuvenation, not only to the performance and usage of the software in question, but to whoever develops, maintains and manages it. In general, our aim is to understand the main reasons as to why a rejuvenation effort is or is not applied. Additionally, our focus on the Boost community is similar to their sole focus on the KDE community, in our case mainly due to the easily accessible body of data contained in their mailing list and their reputation involving C++ development throughout decades.
+
+Swillus et al\cite{swillus2023sentiment} conducted an analysis of Stack Overflow posts regarding software testing. While also focusing on a widely applied and influential topic on software development, the analysis focused on how this practice is perceived through the developer's perspective. For this, the Stack Overflow messages were mined and subsqeuently filtered through a semi-automated method and then by a systematic qualitative data analysis. These processes intend to both find posts relevant to the topic and to initiate the construction of preliminary hypotheses for further analysis. The strategy employed for the manual data analysis was based on the Socio-Technical Grounded Theory\cite{hoda2021socio}, and required iterative cycles envolving teams of analyzers in order to achieve its goal of determining and characterizing the interpretative contents in the body of data. Added to this, an automated sentiment analysis was employed to verify the sentimental response each topic of interest had. Their results suggest that software testing motivation increased with the complexity of the project, and that the practice itself is seen as something to aspire to. We referenced this research in order to employ a somewhat similar manual analysis method focusing on broader interpretative topics.
+
+Tahir et al\cite{tahir2020large} conducted a similar style of research investigating how developers at Stack Overflow, Stack Exchange and Code Review discussed code smells and anti-patterns. The authors employed similar automated filtering techniques, given the similarities of the platforms in question, and subsequently employed a manual effort on validating the automated results and further analysing the thematic contents of the dataset. Their results suggest that developers don't have a clear definition of code smells and anti-patterns, yet they seem to have negative feelings towards these practices in general. Similarly to the previous research mentioned, we also referenced their work for employing a similar thematic-focused approach.
+
+Throughout the studies mentioned, a common theme is that of data mining in order to obtain a dataset to apply the analysis upon. These and many other published studies of similar application were the main source of inspiration to proceed this way, having a clear idea of what the Boost mailing list might contain given its large span of messages over decades. Our study is not meant to be an extensive, final search for source code rejuvenation in the Boost mailing list. Instead, we aim to find as much general rejuvenation discussion as possible and analyze how it was handled, as well as maintaining references to these messages, should any interested person wish to use it.
+
+
+\subsection{Natural Language Processing and Learning Algorithms}
+Natural language processing (commonly abbreviated to NLP) is an area of research that explores how computers can be used to understand and manipulate natural language in text or speech. it is an endeavour that aims to gain knowledge about how humans understand and use language, as well as to develop tools and techniques that allow a computer to perform tasks that involve manipulating and understanding natural language. \cite{chowdhary2020natural}
+
+\subsubsection{Data Vectorization}
+
+In order to employ a machine-learning algorithm to classify messages regarding their relevance to source code rejuvenation discussion, there needs to be a way to process the text using metrics and organize it in a way that the learning algorithm can receive as input. The NLP approach chosen for this task was a technique called Bag of Words, which is responsible for extracting the features of the input text. In it, three main processes are employed:
+
+    \begin{itemize}
+    \item{\textbf{\textit{Tokenization}}}
+    
+    The process that divides all text strings into pieces called tokens. It uses, for example, spaces and punctuation as separators. Each unique token is identified by an integer.
+    
+    \item{\textbf{\textit{Counting}}}
+    
+    The number of occurences of each token in the input data is counted and stored.
+    
+    \item{\textbf{\textit{Normalization}}}
+    
+    The distribution of tokens is normalized, with weights applied to each token, seeking to reduce the importance of those that appear in a majority of the inputs.
+    
+    \end{itemize}
+
+With this technique, it is possible to extract the irreductible elements of meaning (words) present in different texts, and check how often each element appears.
+
+It is also worth mentioning that the process of normalization mentioned above can be done using the TF-IDF transform. This transform multiplies the frequency that a given term occurs in an input (term-frequency, or TF) by its inverse frequency of occurence in different inputs (inverse document-frequency, or IDF). Thus, if a term is used very frequently and in many documents, such as words that carry little individual information, like articles, prepositions and the like, this term will not be of great significance in the extraction result, even if it is very common within the body of data.
+
+Using the TF-IDF transform makes it easier to filter out tokens that would not be as relevant in terms of meaning in order to better characterize each message or input.
+
+The features obtained through this technique can then be used to create a machine learning model that is a message classifier. This classifier should be able to identify messages that are or are not relevant in relation to the topic of source code rejuvenation. For this task, a learning algorithm called Support Vector Machine was used.
+
+\subsubsection{Support Vector Machines}
+Commonly abbreviated as SVM, Support Vector Machines are a family of learning algorithms that specialize in two-class discriminant functions. \cite{mammone2009support} The case of classifying text messages with regard to topic relevance is about establishing a threshold that separates relevant messages from non-relevant ones, and this is precisely the task an SVM performs.
+
+In short, the goal of an SVM algorithm is to efficiently search for a separating hyperplane in a high-dimensional space of features. \cite{mammone2009support} In other words, given a feature space generated by metrics and other heuristics applied to the body of data, the SVM searches for a linear threshold that separates the data entries into two classes according to the given specifications. This threshold is called a hyperplane, due to it being its representation in high-dimensional space. In the application described in this document, the separating hyperplane's function was adjusted using the Stochastic Gradient Descent Technique.
+
+The algorithm, in its simplest form, aims to find the hyperplane that separates the two data sets perfectly and that maximizes the margin between the hyperplane and the data points closest to it. This model is called the maximum margin classifier, or strict margin SVM. \cite{mammone2009support}
+
+Since real-world applications rarely have data sets that are perfectly or even linearly separable into categories, there are extensions to this original algorithm. In order for the algorithm to accept miscalssifications up to a specified margin of error, so that is can be applied to datasets with more noise and outliers, there exists the soft margin classifier. In addition, so that the algorithm can deal with data sets that are not linearly separable, Kernels (or kernel functions) are used to manipulate the feature space consistently, so that the threshold can be computed linearly. \cite{mammone2009support}
+
